@@ -51,9 +51,6 @@ module Tree::Utils::BranchTool
 
   end
 
-
-  private
-
   def top_of_branch
     first_child ? first_child.top_of_branch : self
   end
