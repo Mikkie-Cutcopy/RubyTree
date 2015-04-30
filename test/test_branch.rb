@@ -33,6 +33,7 @@ module TestTree
     def test_merge_branches
       merged_branch = new_branch_a.merge_branch(['Mike', 'Mary', ['Jessie', "Hello, I'm Jessie"], 'Rust'])
 
+      #* Mike
       # +---+ Mary
       #     |---+ Glen
       #          +---> Charlie
@@ -44,6 +45,22 @@ module TestTree
       assert_equal('Mary', merged_branch.first_child.name, 'Child is Mary')
       assert_equal(['Glen', 'Jessie'], merged_branch.first_child.children.map(&:name), 'Grandchilds are Jessie and Glen')
       assert_equal("Hello, I'm Jessie", merged_branch.first_child.last_child.content, 'Content of Jessie')
+    end
+
+    def test_new_branch_with_nodes
+      some_node = new_branch_a.merge_branch(['Mike', 'Mary', 'Jessie', 'Rust'])
+      new_branch = Tree::TreeNode.new_branch(['Sara', 'Charlie', some_node, 'Stan'])
+
+      # * Sara
+      # +---+ Charlie
+      #     +---+ Mike
+      #         |---+ Mary
+      #              |---+ Glen
+      #                  +---> Charlie
+      #              +---+ Jessie
+      #                  +---> Rust
+      #     +---> Stan
+
     end
 
   end

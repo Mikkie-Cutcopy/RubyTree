@@ -10,16 +10,22 @@ module Tree::Utils::BranchTool
 
     def new_branch(arr)
       check_arguments(arr)
-      top = arr.inject(nil) do |root ,n|
-          new_node =  n.is_a?(Array)   ?   new(*n) : new(n)
-          root ? root.top_of_branch << new_node : new_node
+      top = arr.inject(nil) do |top ,n|
+          new_node = if n.is_a?(Array)
+                         new(*n)
+                     elsif n.is_a?(Tree::TreeNode)
+                         n.is_root? ? n : (raise RuntimeError, "The node #{n} should be root" )
+                     else
+                         new(n)
+                     end
+          top ? top << new_node : new_node
       end
       top.root
     end
 
     def check_arguments(arr)
       arr.each do |n|
-        raise ArgumentError, "Argument has forbidden class: #{n.class}" unless [Array, String, Integer].any? {|klass| n.is_a?(klass)}
+        raise ArgumentError, "Argument has forbidden class: #{n.class}" unless [Array, String, Integer, Tree::TreeNode].any? {|klass| n.is_a?(klass)}
       end
     end
 
@@ -36,15 +42,7 @@ module Tree::Utils::BranchTool
   end
 
 
-  def branch_from_parents
-
-  end
-
-  def branch_till(node)
-
-  end
-
-  def reverse_branch
+  def deattach_branch(node)
 
   end
 
@@ -56,10 +54,6 @@ module Tree::Utils::BranchTool
     else
       false
     end
-  end
-
-  def top_of_branch
-    first_child ? first_child.top_of_branch : self
   end
 
 end
