@@ -8,32 +8,30 @@ module Tree::Utils::BranchTool
 
   module ClassMethods
 
-    def new_branch(*args)
-      check_arguments(args)
-      top = args.inject(nil) do |root ,n|
+    def new_branch(arr)
+      check_arguments(arr)
+      top = arr.inject(nil) do |root ,n|
         root ? root.top_of_branch << new(n) : new(n)
       end
       top.root
     end
 
-    private
-
-    def check_arguments(args)
-      args.each do |n|
+    def check_arguments(arr)
+      arr.each do |n|
         raise ArgumentError, "Argument has forbidden class: #{n.class}" unless [Array, String, Integer].any? {|klass| n.is_a?(klass)}
       end
     end
 
   end
 
-  def merge_branch(*args)
-    self.class.check_arguments(args)
-    merge(self.class.new_branch(args))
+  def merge_branch(arr)
+    self.class.check_arguments(arr)
+    merge(self.class.new_branch(arr))
   end
 
-  def merge_branch!(*args)
-    self.class.check_arguments(args)
-    merge!(self.class.new_branch(args))
+  def merge_branch!(arr)
+    self.class.check_arguments(arr)
+    merge!(self.class.new_branch(arr))
   end
 
 
