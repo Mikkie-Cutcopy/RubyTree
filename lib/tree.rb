@@ -90,6 +90,7 @@ module Tree
     include Tree::Utils::JSONConverter
     include Tree::Utils::TreeMergeHandler
     include Tree::Utils::HashConverter
+    include Tree::Utils::BranchTool
 
     # @!group Core Attributes
 
@@ -906,6 +907,8 @@ module Tree
 
       children { |child| child.print_tree(level + 1, max_depth, block) if child } # Child might be 'nil'
     end
+
+
 
   end
 end
