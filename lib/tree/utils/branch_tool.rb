@@ -11,7 +11,8 @@ module Tree::Utils::BranchTool
     def new_branch(arr)
       check_arguments(arr)
       top = arr.inject(nil) do |root ,n|
-        root ? root.top_of_branch << new(n) : new(n)
+          new_node =  n.is_a?(Array)   ?   new(*n) : new(n)
+          root ? root.top_of_branch << new_node : new_node
       end
       top.root
     end
