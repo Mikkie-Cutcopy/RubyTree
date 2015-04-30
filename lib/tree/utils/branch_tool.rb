@@ -4,6 +4,8 @@ module Tree::Utils::BranchTool
     base.extend(ClassMethods)
   end
 
+  # Branch is a node that has chain with single child
+
   module ClassMethods
 
     def new_branch(*args)
@@ -48,7 +50,13 @@ module Tree::Utils::BranchTool
   end
 
   def branch?
-
+    if @children.length == 1
+      @children.first.branch?
+    elsif @children.empty?
+      root? ? false : true
+    else
+      false
+    end
   end
 
   def top_of_branch
